@@ -3,7 +3,7 @@ ccg package provides functions to change the color of console text.
 
 Under windows platform, the Console API is used. Under other systems, ANSI text mode is used.
 */
-package ccg
+package goColorChange
 
 // Color is the type of color to be set.
 type Color int

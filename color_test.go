@@ -1,4 +1,4 @@
-package ccg
+package goColorChange
 
 import (
 	"testing"

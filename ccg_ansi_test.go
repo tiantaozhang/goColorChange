@@ -1,11 +1,10 @@
 // +build !windows
 
-package ccg
+package goColorChange
 
 import (
 	"fmt"
 	"testing"
-	//"github.com/golangplus/testing/assert"
 )
 
 func TestAnsiText(t *testing.T) {
