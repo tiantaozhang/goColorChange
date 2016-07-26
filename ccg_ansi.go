@@ -4,8 +4,12 @@ package goColorChange
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"os"
+	"runtime"
 	"strconv"
+	"strings"
 )
 
 func isDumbTerm() bool {
@@ -86,4 +90,32 @@ func changeColorAndStyle(style Style, fg Color, bg Color) {
 	}
 
 	fmt.Print(ansiText2(style, fg, bg))
+}
+
+func LogToFile(spath string, ufmt string, args ...interface{}) error {
+	var f interface{}
+	if spath == "" {
+		f = os.Stdout
+		//return fmt.Errorf("spath is nil")
+	} else {
+		var err error
+		f, err = os.OpenFile(spath, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
+		if err != nil {
+			log.Printf("openfile (%v) err:(%v)\n", spath, err)
+			return err
+		}
+		defer f.(*os.File).Close()
+
+	}
+	_, file, line, ok := runtime.Caller(0)
+	if !ok {
+		log.Printf("runtime caller not ok:%v\n", ok)
+	}
+	files := strings.Split(file, "/")
+	file = files[len(files)-1]
+	log.SetOutput(f.(io.Writer))
+
+	log.Printf(fmt.Sprintf("[%v:%v] [D] %v", file, line, ufmt), args...)
+	//systemlog.Printf(format, ...)
+	return nil
 }

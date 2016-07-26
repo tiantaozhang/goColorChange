@@ -26,11 +26,15 @@ func TestAnsiText(t *testing.T) {
 }
 
 func TestAnsiText2(t *testing.T) {
+	ResetColor()
 
 	ChangeColorAndStyle(Underline, Green, None)
 	fmt.Println("underline green white")
+	LogToFile("", "underline %v %v with lines,files", "green", "white")
+	LogToFile("1.txt", "Flicker %v %v wieh lines,files", "blue", "none")
 	ResetColor()
 	ChangeColorAndStyle(Flicker, Blue, None)
 	fmt.Println("Flicker Blue none")
+	LogToFile("", "Flicker %v %v wieh lines,files", "blue", "none")
 	ResetColor()
 }
