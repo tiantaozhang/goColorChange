@@ -92,7 +92,7 @@ func changeColorAndStyle(style Style, fg Color, bg Color) {
 	fmt.Print(ansiText2(style, fg, bg))
 }
 
-func LogToFile(spath string, ufmt string, args ...interface{}) error {
+func LogToFile(spath string, callDep int, ufmt string, args ...interface{}) error {
 	var f interface{}
 	if spath == "" {
 		f = os.Stdout
@@ -107,7 +107,7 @@ func LogToFile(spath string, ufmt string, args ...interface{}) error {
 		defer f.(*os.File).Close()
 
 	}
-	_, file, line, ok := runtime.Caller(0)
+	_, file, line, ok := runtime.Caller(callDep)
 	if !ok {
 		log.Printf("runtime caller not ok:%v\n", ok)
 	}
